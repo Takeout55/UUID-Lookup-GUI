@@ -1,5 +1,6 @@
 import tkinter as tk
 import requests
+import os.path
 
 #Root menu setup
 root = tk.Tk()
@@ -11,7 +12,7 @@ root.rowconfigure(1, weight=1)
 root.geometry("500x300")
 
 #Final Menu
-def Final_Menu(data):
+def Final_Menu(data, filename):
     menu = tk.Tk()
     menu.title("UUID + Username!")
     text = tk.Entry(menu)
@@ -25,6 +26,15 @@ def Final_Menu(data):
 
     menu.geometry("1500x100")
     menu.mainloop()
+
+    if os.path.isfile("files/"+filename + ".txt"):
+        f = open("files/"+filename + ".txt", "x")
+        f.write(str(data))
+        f.close()
+    else:
+        f = open("files/"+filename + ".txt", "x")
+        f.write(str(data))
+        f.close()
 
 #User Menu
 def USER_pressed():
@@ -40,7 +50,7 @@ def USER_pressed():
             resp = requests.get(url=api_url)
             data = resp.json()
             user_menu.destroy()
-            Final_Menu(data)
+            Final_Menu(data,USER)
             username.delete(0, tk.END)
 
     username = tk.Entry(user_menu)
@@ -71,7 +81,7 @@ def UUID_pressed():
             api_url = "https://api.minecraftservices.com/minecraft/profile/lookup/" + UUID
             resp = requests.get(url=api_url)
             data = resp.json()
-            Final_Menu(data)
+            Final_Menu(data,UUID)
             UUID_menu.destroy()
             UUID_input.delete(0, tk.END)
 
