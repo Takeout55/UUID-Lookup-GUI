@@ -16,11 +16,22 @@ resp = requests.get(url=url)
 data = resp.json()
 print(data)
 
-if os.path.isfile("files/" + filename + ".txt"):
-    f = open("files/" + filename + ".txt", "x")
-    f.write(str(data))
-    f.close()
+if os.path.isdir("files"):
+    if os.path.isfile("files/" + filename + ".txt"):
+        f = open("files/" + filename + ".txt", "x")
+        f.write(str(data))
+        f.close()
+    else:
+        f = open("files/" + filename + ".txt", "x")
+        f.write(str(data))
+        f.close()
 else:
-    f = open("files/" + filename + ".txt", "x")
-    f.write(str(data))
-    f.close()
+    os.mkdir("files")
+    if os.path.isfile("files/" + filename + ".txt"):
+        f = open("files/" + filename + ".txt", "x")
+        f.write(str(data))
+        f.close()
+    else:
+        f = open("files/" + filename + ".txt", "x")
+        f.write(str(data))
+        f.close()

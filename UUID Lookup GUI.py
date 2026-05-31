@@ -1,6 +1,7 @@
 import tkinter as tk
+from tkinter import filedialog
 import requests
-import os.path
+
 
 #Root menu setup
 root = tk.Tk()
@@ -12,29 +13,37 @@ root.rowconfigure(1, weight=1)
 root.geometry("500x300")
 
 #Final Menu
-def Final_Menu(data, filename):
+def Final_Menu(data,IDorUser):
     menu = tk.Tk()
     menu.title("UUID + Username!")
     text = tk.Entry(menu)
     text.insert(tk.END, data)
     text.grid(row=0, column=0, sticky="NSEW", columnspan=2)
-    text.configure(selectforeground="blue", foreground="red", background="black", selectbackground="red", font=("Arial", 32, "bold"))
+    if IDorUser == 0:
+        text.configure(selectforeground="blue", foreground="red", background="black", selectbackground="blue", font=("Arial", 32, "bold"))
+    else:
+        text.configure(selectforeground="blue", foreground="blue", background="black", selectbackground="red",font=("Arial", 32, "bold"))
 
     menu.configure(background='black')
     menu.columnconfigure(0, weight=1)
     menu.rowconfigure(0, weight=1)
 
+    def savefile():
+        t = str(data)
+        savelocation=filedialog.asksaveasfilename(defaultextension=".txt",filetypes =[('Txt', '*.txt'), ('Json', '*.json'),('All files', '*.*')])
+        file1 = open(savelocation,"w+")
+        file1.write(t)
+        file1.close()
+
+    savebutton = tk.Button(menu, text="Save as File", command=savefile)
+    savebutton.grid(row=1, column=0, sticky="NSEW", columnspan=2)
+    if IDorUser == 0:
+        savebutton.configure(background="black", foreground="red", font=("Arial", 12, "bold"))
+    else:
+        savebutton.configure(background="black", foreground="blue", font=("Arial", 12, "bold"))
+
     menu.geometry("1500x100")
     menu.mainloop()
-
-    if os.path.isfile("files/"+filename + ".txt"):
-        f = open("files/"+filename + ".txt", "x")
-        f.write(str(data))
-        f.close()
-    else:
-        f = open("files/"+filename + ".txt", "x")
-        f.write(str(data))
-        f.close()
 
 #User Menu
 def USER_pressed():
@@ -50,7 +59,7 @@ def USER_pressed():
             resp = requests.get(url=api_url)
             data = resp.json()
             user_menu.destroy()
-            Final_Menu(data,USER)
+            Final_Menu(data,0)
             username.delete(0, tk.END)
 
     username = tk.Entry(user_menu)
@@ -81,17 +90,17 @@ def UUID_pressed():
             api_url = "https://api.minecraftservices.com/minecraft/profile/lookup/" + UUID
             resp = requests.get(url=api_url)
             data = resp.json()
-            Final_Menu(data,UUID)
+            Final_Menu(data,1)
             UUID_menu.destroy()
             UUID_input.delete(0, tk.END)
 
     UUID_input = tk.Entry(UUID_menu)
     UUID_input.grid(row=0, column=0)
-    UUID_input.configure(selectforeground="blue", foreground="red", background="black", selectbackground="red",font=("Arial", 16, "bold"))
+    UUID_input.configure(selectforeground="red", foreground="blue", background="black", selectbackground="red",font=("Arial", 16, "bold"))
 
     entry_button = tk.Button(UUID_menu, text="Enter UUID", command=enter_UUID)
     entry_button.grid(row=0, column=1)
-    entry_button.configure(background='black',foreground='Red',font=("Arial",16,"bold"),highlightcolor="red")
+    entry_button.configure(background='black',foreground='blue',font=("Arial",16,"bold"),highlightcolor="red")
     UUID_menu.bind("<Return>", enter_UUID)
 
     UUID_menu.configure(background='black')
