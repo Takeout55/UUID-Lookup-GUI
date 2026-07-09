@@ -20,9 +20,10 @@ def Final_Menu(data,IDorUser):
     text.insert(tk.END, data)
     text.grid(row=0, column=0, sticky="NSEW", columnspan=2)
     if IDorUser == 0:
-        text.configure(selectforeground="blue", foreground="red", background="black", selectbackground="blue", font=("Arial", 32, "bold"))
-    else:
+        text.configure(selectforeground="red", foreground="red", background="black", selectbackground="blue", font=("Arial", 32, "bold"))
+    if IDorUser == 1:
         text.configure(selectforeground="blue", foreground="blue", background="black", selectbackground="red",font=("Arial", 32, "bold"))
+
 
     menu.configure(background='black')
     menu.columnconfigure(0, weight=1)
@@ -59,7 +60,7 @@ def USER_pressed():
             resp = requests.get(url=api_url)
             data = resp.json()
             user_menu.destroy()
-            Final_Menu(data,0)
+            Final_Menu(data,1)
             username.delete(0, tk.END)
 
     username = tk.Entry(user_menu)
@@ -90,8 +91,8 @@ def UUID_pressed():
             api_url = "https://api.minecraftservices.com/minecraft/profile/lookup/" + UUID
             resp = requests.get(url=api_url)
             data = resp.json()
-            Final_Menu(data,1)
             UUID_menu.destroy()
+            Final_Menu(data, 1)
             UUID_input.delete(0, tk.END)
 
     UUID_input = tk.Entry(UUID_menu)
