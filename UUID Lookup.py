@@ -18,7 +18,7 @@ print(data)
 
 if os.path.isdir("files"):
     if os.path.isfile("files/" + filename + ".txt"):
-        f = open("files/" + filename + ".txt", "x")
+        f = open("files/" + filename + ".txt", "w")
         f.write(str(data))
         f.close()
     else:
@@ -27,11 +27,6 @@ if os.path.isdir("files"):
         f.close()
 else:
     os.mkdir("files")
-    if os.path.isfile("files/" + filename + ".txt"):
-        f = open("files/" + filename + ".txt", "x")
-        f.write(str(data))
-        f.close()
-    else:
-        f = open("files/" + filename + ".txt", "x")
-        f.write(str(data))
-        f.close()
+    f = open("files/" + filename + ".txt", "x")
+    f.write(str(data))
+    f.close()

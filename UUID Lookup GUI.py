@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import filedialog
 import requests
 
-
 #Root menu setup
 root = tk.Tk()
 root.title("UUID Lookup")
