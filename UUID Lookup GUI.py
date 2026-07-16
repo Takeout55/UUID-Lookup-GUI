@@ -88,7 +88,6 @@ while True:
                 data = resp.json()
                 user_menu.destroy()
                 Final_Menu(data,0)
-                username.delete(0, tk.END)
 
         username = tk.Entry(user_menu)
         username.grid(row=0, column=0)
@@ -120,7 +119,6 @@ while True:
                 data = resp.json()
                 UUID_menu.destroy()
                 Final_Menu(data, 1)
-                UUID_input.delete(0, tk.END)
 
         UUID_input = tk.Entry(UUID_menu)
         UUID_input.grid(row=0, column=0)
