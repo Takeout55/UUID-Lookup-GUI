@@ -70,7 +70,7 @@ while True:
         else:
             endbutton.configure(background="black", foreground="blue", font=("Arial", 12, "bold"))
 
-        menu.geometry("1500x100")
+        menu.geometry("1500x300")
         menu.mainloop()
 
     #User Menu
